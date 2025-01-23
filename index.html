@@ -354,23 +354,58 @@
         resetTimerButton.addEventListener('click', resetTimer);
 
         function startTimer() {
-            // Timer start logic (same as before)
+            if (timeRemaining <= 0) return;
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Time's up!");
+                    timerDisplay.textContent = "00:00";
+                    resetButtons();
+                    return;
+                }
+                timeRemaining--;
+                updateTimerDisplay();
+            }, 1000);
+            startTimerButton.disabled = true;
+            pauseTimerButton.disabled = false;
+            stopTimerButton.disabled = false;
+            isPaused = false;
         }
 
         function pauseTimer() {
-            // Timer pause logic (same as before)
+            clearInterval(timerInterval);
+            startTimerButton.disabled = false;
+            pauseTimerButton.disabled = true;
+            stopTimerButton.disabled = false;
+            isPaused = true;
         }
 
         function stopTimer() {
-            // Timer stop logic (same as before)
+            clearInterval(timerInterval);
+            timeRemaining = 0;
+            updateTimerDisplay();
+            resetButtons();
         }
 
         function resetTimer() {
-            // Timer reset logic (same as before)
+            clearInterval(timerInterval);
+            timeRemaining = 0;
+            updateTimerDisplay();
+            resetButtons();
+        }
+
+        function resetButtons() {
+            startTimerButton.disabled = false;
+            pauseTimerButton.disabled = true;
+            stopTimerButton.disabled = true;
+            isPaused = false;
         }
 
         function updateTimerDisplay() {
-            // Timer display update logic (same as before)
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
         }
     </script>
 </body>
