@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny Webpage Viewer</title>
+    <style>
+        /* Keep the rest of your CSS the same */
+    </style>
+</head>
+<body>
+    <!-- Settings Button (Gear Icon) -->
+    <button class="settings-button" id="settingsButton">⚙️</button>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="slider-container">
+            <label for="slider">Transparency:</label>
+            <input type="range" min="0" max="1" value="1" step="0.01" class="slider" id="slider">
+        </div>
+        <button class="toggle-button" id="toggleNotesButton">Show Notes</button>
+        <button class="toggle-button" id="toggleTimerButton">Show Timer</button>
+        <button class="toggle-button" id="toggleWebpageButton">Hide Webpage</button>
+    </div>
+
+    <!-- Notes Window (Hidden by Default) -->
+    <div class="window" id="notesWindow" style="display: none;">
+        <div class="title-bar" id="notesTitleBar">
+            Notes
+        </div>
+        <textarea class="text-area" id="notesTextArea" placeholder="Type something..."></textarea>
+    </div>
+
+    <!-- Webpage Window (Visible by Default) -->
+    <div class="window" id="webpageWindow">
+        <div class="title-bar" id="webpageTitleBar">
+            Webpage Viewer
+        </div>
+        <div class="youtube-container">
+            <div class="youtube-input-container">
+                <input type="text" id="webpageUrl" placeholder="Paste webpage URL here">
+                <button id="runWebpageButton">▶️</button>
+            </div>
+            <div id="webpagePlayer"></div>
+        </div>
+    </div>
+
+    <!-- Timer Window (Hidden by Default) -->
+    <div class="window" id="timerWindow" style="display: none;">
+        <div class="title-bar" id="timerTitleBar">
+            Stop Timer
+        </div>
+        <div style="padding: 10px;">
+            <div class="timer-controls">
+                <button id="add1Minute">+1</button>
+                <button id="add5Minutes">+5</button>
+                <button id="add10Minutes">+10</button>
+            </div>
+            <div id="timerDisplay">00:00</div>
+            <div class="timer-controls">
+                <button id="startTimerButton">Start</button>
+                <button id="pauseTimerButton" disabled>Pause</button>
+                <button id="stopTimerButton" disabled>Stop</button>
+                <button id="resetTimerButton">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Text -->
+    <div class="footer-text">Made by 9riscei (totally not using chat-gpt :heh:)</div>
+
+    <script>
+        const notesWindow = document.getElementById('notesWindow');
+        const settingsButton = document.getElementById('settingsButton');
+        const settingsPanel = document.getElementById('settingsPanel');
+        const slider = document.getElementById('slider');
+        const toggleNotesButton = document.getElementById('toggleNotesButton');
+        const toggleTimerButton = document.getElementById('toggleTimerButton');
+        const toggleWebpageButton = document.getElementById('toggleWebpageButton');
+
+        const webpageWindow = document.getElementById('webpageWindow');
+        const webpageUrlInput = document.getElementById('webpageUrl');
+        const runWebpageButton = document.getElementById('runWebpageButton');
+        const webpagePlayer = document.getElementById('webpagePlayer');
+
+        const timerWindow = document.getElementById('timerWindow');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const startTimerButton = document.getElementById('startTimerButton');
+        const pauseTimerButton = document.getElementById('pauseTimerButton');
+        const stopTimerButton = document.getElementById('stopTimerButton');
+        const resetTimerButton = document.getElementById('resetTimerButton');
+
+        // Toggle settings panel visibility
+        settingsButton.addEventListener('click', () => {
+            settingsPanel.style.display = (settingsPanel.style.display === 'none' || settingsPanel.style.display === '') ? 'block' : 'none';
+        });
+
+        // Control transparency of all windows
+        slider.addEventListener('input', () => {
+            const opacity = slider.value;
+            notesWindow.style.opacity = opacity;
+            webpageWindow.style.opacity = opacity;
+            timerWindow.style.opacity = opacity;
+        });
+
+        // Toggle Notes Window visibility
+        toggleNotesButton.addEventListener('click', () => {
+            notesWindow.style.display = notesWindow.style.display === 'none' ? 'block' : 'none';
+            toggleNotesButton.textContent = notesWindow.style.display === 'none' ? 'Show Notes' : 'Hide Notes';
+        });
+
+        // Toggle Timer Window visibility
+        toggleTimerButton.addEventListener('click', () => {
+            timerWindow.style.display = timerWindow.style.display === 'none' ? 'block' : 'none';
+            toggleTimerButton.textContent = timerWindow.style.display === 'none' ? 'Show Timer' : 'Hide Timer';
+        });
+
+        // Toggle Webpage Window visibility
+        toggleWebpageButton.addEventListener('click', () => {
+            webpageWindow.style.display = webpageWindow.style.display === 'none' ? 'block' : 'none';
+            toggleWebpageButton.textContent = webpageWindow.style.display === 'none' ? 'Show Webpage' : 'Hide Webpage';
+        });
+
+        // Webpage functionality
+        runWebpageButton.addEventListener('click', () => {
+            const url = webpageUrlInput.value.trim();
+            if (!url) {
+                alert("Please paste a valid URL.");
+                return;
+            }
+
+            webpagePlayer.innerHTML = `  
+                <iframe
+                    width="100%"
+                    height="100%"
+                    src="${url}"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            `;
+        });
+
+        // Timer functionality
+        startTimerButton.addEventListener('click', startTimer);
+        pauseTimerButton.addEventListener('click', pauseTimer);
+        stopTimerButton.addEventListener('click', stopTimer);
+        resetTimerButton.addEventListener('click', resetTimer);
+
+        function startTimer() {
+            // Timer start logic (same as before)
+        }
+
+        function pauseTimer() {
+            // Timer pause logic (same as before)
+        }
+
+        function stopTimer() {
+            // Timer stop logic (same as before)
+        }
+
+        function resetTimer() {
+            // Timer reset logic (same as before)
+        }
+
+        function updateTimerDisplay() {
+            // Timer display update logic (same as before)
+        }
+    </script>
+</body>
+</html>
