@@ -273,7 +273,7 @@
     </div>
 
     <!-- Footer Text -->
-    <div class="footer-text">Made by SirPro (totally not using chat-gpt :heh:)</div>
+    <div class="footer-text">Made by 9riscei (totally not using chat-gpt :heh:)</div>
 
     <script>
         const notesWindow = document.getElementById('notesWindow');
