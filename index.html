@@ -3,410 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiny Webpage Viewer</title>
+    <title>Webpage Viewer</title>
     <style>
         body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-             background-color: rgba(0, 0, 0, 0.7);  /* Black background with 70% opacity */
-            overflow: hidden;
-            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
         }
 
-        .window {
+        #webViewer {
             position: absolute;
-            top: 50px;
-            left: 50px;
-            width: 300px;
-            height: 200px;
-            background-color: rgba(40, 40, 40, 0.9);
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            color: #ffffff;
-            overflow: hidden;
-            resize: both;
-            opacity: 1; /* Default opacity */
-            transition: opacity 0.3s ease;
-        }
-
-        .title-bar {
-            width: 100%;
-            height: 30px;
-            background-color: rgba(30, 30, 30, 0.9);
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            cursor: move;
-            display: flex;
-            align-items: center;
-            padding-left: 10px;
-            user-select: none;
-        }
-
-        .text-area {
-            width: calc(100% - 20px);
-            height: calc(100% - 40px);
-            margin: 10px;
-            background-color: transparent;
-            border: none;
-            color: #ffffff;
-            font-size: 14px;
-            resize: none;
-            outline: none;
-        }
-
-        .text-area::placeholder {
-            color: #888;
-        }
-
-        .youtube-container {
-            width: calc(100% - 20px);
-            height: calc(100% - 40px);
-            margin: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .youtube-input-container {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .youtube-input-container input {
-            flex: 1;
-            padding: 5px;
-            background-color: rgba(50, 50, 50, 0.9);
-            border: none;
-            color: #ffffff;
-            border-radius: 5px;
-        }
-
-        .youtube-input-container button {
-            padding: 5px 10px;
-            background-color: rgba(40, 40, 40, 0.9);
-            color: #ffffff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
-        }
-
-        .youtube-input-container button:hover {
-            opacity: 1;
-        }
-
-        #youtubePlayer {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        #youtubePlayer iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 5px;
-        }
-
-        .settings-button {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            background-color: rgba(30, 30, 30, 0.9);
-            color: #ffffff;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            font-size: 16px;
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .settings-button:hover {
-            opacity: 1;
-        }
-
-        .settings-panel {
-            position: fixed;
-            top: 50px;
-            right: 10px;
-            width: 200px;
-            background-color: rgba(30, 30, 30, 0.9);
-            border-radius: 10px;
+            top: 100px;
+            left: 100px;
+            background-color: white;
+            border: 2px solid #333;
             padding: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            display: none; /* Hidden by default */
+            z-index: 1000;
         }
 
-        .settings-panel .slider-container {
+        #webViewer input {
+            width: 80%;
+            padding: 5px;
             margin-bottom: 10px;
         }
 
-        .settings-panel .slider {
-            width: 100%;
-        }
-
-        .settings-panel .toggle-button {
-            width: 100%;
-            padding: 5px;
-            background-color: rgba(40, 40, 40, 0.9);
-            color: #ffffff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
-        }
-
-        .settings-panel .toggle-button:hover {
-            opacity: 1;
-        }
-
-        .timer-controls {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-            justify-content: center;
-        }
-
-        .timer-controls button {
+        #webViewer button {
             padding: 5px 10px;
-            background-color: rgba(40, 40, 40, 0.9);
-            color: #ffffff;
-            border: none;
-            border-radius: 5px;
             cursor: pointer;
-            font-size: 14px;
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
         }
 
-        .timer-controls button:hover {
-            opacity: 1;
+        #webViewer iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
         }
 
-        #timerDisplay {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 24px;
-            font-weight: bold;
+        .draggable {
+            cursor: move;
         }
 
-        /* Footer text */
-        .footer-text {
-            position: fixed;
-            bottom: 10px;
-            left: 10px;
-            font-size: 12px;
-            color: #888;
-            user-select: none;
+        .resizable {
+            resize: both;
+            overflow: auto;
         }
     </style>
 </head>
 <body>
-    <!-- Settings Button (Gear Icon) -->
-    <button class="settings-button" id="settingsButton">⚙️</button>
 
-    <!-- Settings Panel -->
-    <div class="settings-panel" id="settingsPanel">
-        <div class="slider-container">
-            <label for="slider">Transparency:</label>
-            <input type="range" min="0" max="1" value="1" step="0.01" class="slider" id="slider">
-        </div>
-        <button class="toggle-button" id="toggleNotesButton">Show Notes</button>
-        <button class="toggle-button" id="toggleTimerButton">Show Timer</button>
-        <button class="toggle-button" id="toggleWebpageButton">Hide Webpage</button>
+    <div id="webViewer" class="draggable resizable">
+        <input type="text" id="urlInput" placeholder="Enter URL" value="https://example.com">
+        <button id="loadBtn">Load Webpage</button>
+        <iframe id="webFrame" src="https://example.com" width="600" height="400"></iframe>
     </div>
-
-    <!-- Notes Window (Hidden by Default) -->
-    <div class="window" id="notesWindow" style="display: none;">
-        <div class="title-bar" id="notesTitleBar">
-            Notes
-        </div>
-        <textarea class="text-area" id="notesTextArea" placeholder="Type something..."></textarea>
-    </div>
-
-    <!-- Webpage Window (Visible by Default) -->
-    <div class="window" id="webpageWindow">
-        <div class="title-bar" id="webpageTitleBar">
-            Webpage Viewer
-        </div>
-        <div class="youtube-container">
-            <div class="youtube-input-container">
-                <input type="text" id="webpageUrl" placeholder="Paste webpage URL here">
-                <button id="runWebpageButton">▶️</button>
-            </div>
-            <div id="webpagePlayer"></div>
-        </div>
-    </div>
-
-    <!-- Timer Window (Hidden by Default) -->
-    <div class="window" id="timerWindow" style="display: none;">
-        <div class="title-bar" id="timerTitleBar">
-            Stop Timer
-        </div>
-        <div style="padding: 10px;">
-            <div class="timer-controls">
-                <button id="add1Minute">+1</button>
-                <button id="add5Minutes">+5</button>
-                <button id="add10Minutes">+10</button>
-            </div>
-            <div id="timerDisplay">00:00</div>
-            <div class="timer-controls">
-                <button id="startTimerButton">Start</button>
-                <button id="pauseTimerButton" disabled>Pause</button>
-                <button id="stopTimerButton" disabled>Stop</button>
-                <button id="resetTimerButton">Reset</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer Text -->
-    <div class="footer-text">Made by 9riscei (totally not using chat-gpt :heh:)</div>
 
     <script>
-        const notesWindow = document.getElementById('notesWindow');
-        const settingsButton = document.getElementById('settingsButton');
-        const settingsPanel = document.getElementById('settingsPanel');
-        const slider = document.getElementById('slider');
-        const toggleNotesButton = document.getElementById('toggleNotesButton');
-        const toggleTimerButton = document.getElementById('toggleTimerButton');
-        const toggleWebpageButton = document.getElementById('toggleWebpageButton');
+        // Allow dragging of the iframe window
+        let dragElement = document.getElementById("webViewer");
+        let offsetX, offsetY;
 
-        const webpageWindow = document.getElementById('webpageWindow');
-        const webpageUrlInput = document.getElementById('webpageUrl');
-        const runWebpageButton = document.getElementById('runWebpageButton');
-        const webpagePlayer = document.getElementById('webpagePlayer');
+        dragElement.addEventListener("mousedown", (e) => {
+            e.preventDefault();
+            offsetX = e.clientX - dragElement.getBoundingClientRect().left;
+            offsetY = e.clientY - dragElement.getBoundingClientRect().top;
 
-        const timerWindow = document.getElementById('timerWindow');
-        const timerDisplay = document.getElementById('timerDisplay');
-        const startTimerButton = document.getElementById('startTimerButton');
-        const pauseTimerButton = document.getElementById('pauseTimerButton');
-        const stopTimerButton = document.getElementById('stopTimerButton');
-        const resetTimerButton = document.getElementById('resetTimerButton');
-
-        // Toggle settings panel visibility
-        settingsButton.addEventListener('click', () => {
-            settingsPanel.style.display = (settingsPanel.style.display === 'none' || settingsPanel.style.display === '') ? 'block' : 'none';
+            document.addEventListener("mousemove", onMouseMove);
+            document.addEventListener("mouseup", () => {
+                document.removeEventListener("mousemove", onMouseMove);
+            });
         });
 
-        // Control transparency of all windows
-        slider.addEventListener('input', () => {
-            const opacity = slider.value;
-            notesWindow.style.opacity = opacity;
-            webpageWindow.style.opacity = opacity;
-            timerWindow.style.opacity = opacity;
-        });
+        function onMouseMove(e) {
+            dragElement.style.left = e.clientX - offsetX + "px";
+            dragElement.style.top = e.clientY - offsetY + "px";
+        }
 
-        // Toggle Notes Window visibility
-        toggleNotesButton.addEventListener('click', () => {
-            notesWindow.style.display = notesWindow.style.display === 'none' ? 'block' : 'none';
-            toggleNotesButton.textContent = notesWindow.style.display === 'none' ? 'Show Notes' : 'Hide Notes';
-        });
+        // Load webpage URL from the input field
+        document.getElementById("loadBtn").addEventListener("click", () => {
+            const url = document.getElementById("urlInput").value;
+            const iframe = document.getElementById("webFrame");
 
-        // Toggle Timer Window visibility
-        toggleTimerButton.addEventListener('click', () => {
-            timerWindow.style.display = timerWindow.style.display === 'none' ? 'block' : 'none';
-            toggleTimerButton.textContent = timerWindow.style.display === 'none' ? 'Show Timer' : 'Hide Timer';
-        });
-
-        // Toggle Webpage Window visibility
-        toggleWebpageButton.addEventListener('click', () => {
-            webpageWindow.style.display = webpageWindow.style.display === 'none' ? 'block' : 'none';
-            toggleWebpageButton.textContent = webpageWindow.style.display === 'none' ? 'Show Webpage' : 'Hide Webpage';
-        });
-
-        // Webpage functionality
-        runWebpageButton.addEventListener('click', () => {
-            const url = webpageUrlInput.value.trim();
-            if (!url) {
-                alert("Please paste a valid URL.");
-                return;
+            if (url) {
+                iframe.src = url;
             }
-
-            webpagePlayer.innerHTML = `  
-                <iframe
-                    width="100%"
-                    height="100%"
-                    src="${url}"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
-                </iframe>
-            `;
         });
-
-        // Timer functionality
-        startTimerButton.addEventListener('click', startTimer);
-        pauseTimerButton.addEventListener('click', pauseTimer);
-        stopTimerButton.addEventListener('click', stopTimer);
-        resetTimerButton.addEventListener('click', resetTimer);
-
-        function startTimer() {
-            if (timeRemaining <= 0) return;
-            clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                if (timeRemaining <= 0) {
-                    clearInterval(timerInterval);
-                    alert("Time's up!");
-                    timerDisplay.textContent = "00:00";
-                    resetButtons();
-                    return;
-                }
-                timeRemaining--;
-                updateTimerDisplay();
-            }, 1000);
-            startTimerButton.disabled = true;
-            pauseTimerButton.disabled = false;
-            stopTimerButton.disabled = false;
-            isPaused = false;
-        }
-
-        function pauseTimer() {
-            clearInterval(timerInterval);
-            startTimerButton.disabled = false;
-            pauseTimerButton.disabled = true;
-            stopTimerButton.disabled = false;
-            isPaused = true;
-        }
-
-        function stopTimer() {
-            clearInterval(timerInterval);
-            timeRemaining = 0;
-            updateTimerDisplay();
-            resetButtons();
-        }
-
-        function resetTimer() {
-            clearInterval(timerInterval);
-            timeRemaining = 0;
-            updateTimerDisplay();
-            resetButtons();
-        }
-
-        function resetButtons() {
-            startTimerButton.disabled = false;
-            pauseTimerButton.disabled = true;
-            stopTimerButton.disabled = true;
-            isPaused = false;
-        }
-
-        function updateTimerDisplay() {
-            const minutes = Math.floor(timeRemaining / 60);
-            const seconds = timeRemaining % 60;
-            timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-        }
     </script>
+
 </body>
 </html>
